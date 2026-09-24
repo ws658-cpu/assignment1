@@ -79,8 +79,7 @@ D) **Look at nb.py vscode sheet for coding details**
 
 E) **What are your two prior probability estimates? What is the shape of the matrix storing your likelihoods? What happens when you vary the smoothing hyperparameter alpha matrix storing your likelihoods?**
 **answer**
- The prior probability is approximately 0.353 for Kennedy and 0.647 for Johnson. The likelihood matrix has the shape (2, 24390). It contains one row per author and one column per vocabulary word.
- As for smoothing, the hyperparameter alpha controls how much probability is assigned to words that do not appear in an author's training documents. When alpha increases, the estimates become more evenly distributed; when alpha decreases, the model relies more on observed word frequencies. When alpha is zero, a word absent from an author’s training documents has likelihood zero for that author. With the log calculation in my code, this becomes log(0), so alpha should be positive. So, smoothing helps the model handle previously unseen words within a big data model.
+The prior probabilities are approximately 0.353 for Kennedy and 0.647 for Johnson. The likelihood matrix has shape (2, 24390): one row per author and one column per vocabulary word. The smoothing parameter alpha assigns a positive likelihood to vocabulary words that did not appear in a particular author’s training documents. Increasing alpha makes the word probabilities more even; decreasing it gives greater weight to observed word frequencies. At alpha = 0, an absent word has likelihood zero for that author, causing log(0) in my prediction calculation. Therefore, the model uses a positive value of alpha.
 
 F) **What are the predicted authors for each of the unlabeled works?**
 Unlabeled work 1 -> Johnson
