@@ -234,75 +234,75 @@ if __name__ == "__main__":
     class_predictions = test(test_df, vocabulary, priors, likelihoods)
     print("Predictions (0=Kennedy, 1=Johnson):", class_predictions)
 
-author_names = {0: "Kennedy", 1: "Johnson"}
-
-for work_number, prediction in enumerate(class_predictions, start=1):
+    author_names = {0: "Kennedy", 1: "Johnson"}
+    
+    for work_number, prediction in enumerate(class_predictions, start=1):
+        print(
+            f"Unlabeled work {work_number} -> {author_names[prediction]}"
+        )
+    
+    acc, f1, conf = get_metrics(test_df["author"], class_predictions)
+    #plot_confusion_matrix(conf, [0, 1])#
+    
+    sklearn_preds = sklearn_nb(training_df, test_df)
+    sklearn_metrics = get_metrics(test_df["author"], sklearn_preds)
+    
+    print("My Naive Bayes — accuracy:", acc, "F1:", f1)
     print(
-        f"Unlabeled work {work_number} -> {author_names[prediction]}"
+        "Scikit-learn — accuracy:",
+        sklearn_metrics[0],
+        "F1:",
+        sklearn_metrics[1],
     )
-
-acc, f1, conf = get_metrics(test_df["author"], class_predictions)
-#plot_confusion_matrix(conf, [0, 1])#
-
-sklearn_preds = sklearn_nb(training_df, test_df)
-sklearn_metrics = get_metrics(test_df["author"], sklearn_preds)
-
-print("My Naive Bayes — accuracy:", acc, "F1:", f1)
-print(
-    "Scikit-learn — accuracy:",
-    sklearn_metrics[0],
-    "F1:",
-    sklearn_metrics[1],
-)
-# Problem #2
-print("My Naive Bayes predictions:", class_predictions)
-print("Scikit-learn predictions:", sklearn_preds)
-
-
-# Problem #3
-acc, f1, conf = get_metrics(test_df["author"], class_predictions)
-
-sklearn_preds = sklearn_nb(training_df, test_df)
-sklearn_acc, sklearn_f1, sklearn_conf = get_metrics(
-    test_df["author"], sklearn_preds
-)
-
-fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-
-sns.heatmap(
-    conf,
-    annot=True,
-    fmt="d",
-    cmap="Reds",
-    xticklabels=["Kennedy", "Johnson"],
-    yticklabels=["Kennedy", "Johnson"],
-    ax=axes[0],
-)
-axes[0].set_title("My Naive Bayes")
-axes[0].set_xlabel("Predicted")
-axes[0].set_ylabel("True")
-
-sns.heatmap(
-    sklearn_conf,
-    annot=True,
-    fmt="d",
-    cmap="Blues",
-    xticklabels=["Kennedy", "Johnson"],
-    yticklabels=["Kennedy", "Johnson"],
-    ax=axes[1],
-)
-axes[1].set_title("Scikit-learn Naive Bayes")
-axes[1].set_xlabel("Predicted")
-axes[1].set_ylabel("True")
-
-plt.tight_layout()
-plt.savefig("conf.jpg", dpi=300, bbox_inches="tight")
-plt.show()
-
-print("My Naive Bayes — accuracy:", acc, "F1:", f1)
-print(
-    "Scikit-learn — accuracy:",
-    sklearn_acc,
-    "F1:",
-    sklearn_f1,
-)
+    # Problem #2
+    print("My Naive Bayes predictions:", class_predictions)
+    print("Scikit-learn predictions:", sklearn_preds)
+    
+    
+    # Problem #3
+    acc, f1, conf = get_metrics(test_df["author"], class_predictions)
+    
+    sklearn_preds = sklearn_nb(training_df, test_df)
+    sklearn_acc, sklearn_f1, sklearn_conf = get_metrics(
+        test_df["author"], sklearn_preds
+    )
+    
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+    
+    sns.heatmap(
+        conf,
+        annot=True,
+        fmt="d",
+        cmap="Reds",
+        xticklabels=["Kennedy", "Johnson"],
+        yticklabels=["Kennedy", "Johnson"],
+        ax=axes[0],
+    )
+    axes[0].set_title("My Naive Bayes")
+    axes[0].set_xlabel("Predicted")
+    axes[0].set_ylabel("True")
+    
+    sns.heatmap(
+        sklearn_conf,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=["Kennedy", "Johnson"],
+        yticklabels=["Kennedy", "Johnson"],
+        ax=axes[1],
+    )
+    axes[1].set_title("Scikit-learn Naive Bayes")
+    axes[1].set_xlabel("Predicted")
+    axes[1].set_ylabel("True")
+    
+    plt.tight_layout()
+    plt.savefig("conf.jpg", dpi=300, bbox_inches="tight")
+    plt.show()
+    
+    print("My Naive Bayes — accuracy:", acc, "F1:", f1)
+    print(
+        "Scikit-learn — accuracy:",
+        sklearn_acc,
+        "F1:",
+        sklearn_f1,
+    )
