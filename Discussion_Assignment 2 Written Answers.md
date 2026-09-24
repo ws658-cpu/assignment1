@@ -80,7 +80,7 @@ D) **Look at nb.py vscode sheet for coding details**
 E) **What are your two prior probability estimates? What is the shape of the matrix storing your likelihoods? What happens when you vary the smoothing hyperparameter alpha matrix storing your likelihoods?**
 **answer**
  The prior probability is approximately 0.353 for Kennedy and 0.647 for Johnson. The likelihood matrix has the shape (2, 24390). It contains one row per author and one column per vocabulary word.
- As for smoothing, the hyperparameter alpha controls how much probability is assigned to words that do not appear in an author's training documents. When alpha increases, the estimates become more evenly distributed; when alpha decreases, the model relies more on observed word frequencies. When alpha is 0, words receive a probability of zero because the entire document probability becomes zero when multiplying. So, smoothing helps the model handle previously unseen words within a big data model.
+ As for smoothing, the hyperparameter alpha controls how much probability is assigned to words that do not appear in an author's training documents. When alpha increases, the estimates become more evenly distributed; when alpha decreases, the model relies more on observed word frequencies. When alpha is zero, a word absent from an author’s training documents has likelihood zero for that author. With the log calculation in my code, this becomes log(0), so alpha should be positive. So, smoothing helps the model handle previously unseen words within a big data model.
 
 F) **What are the predicted authors for each of the unlabeled works?**
 Unlabeled work 1 -> Johnson
@@ -114,7 +114,7 @@ a) **Report the accuracy and the F1-score of both the Naive Bayes classifier you
 My Naive Bayes — accuracy: 0.8 F1: 0.75
 Scikit-learn — accuracy: 0.9 F1: 0.8888888888888888
 
-"My Naive Bayes Classifier" level of accuracy is seen as 0.8 and for F1 score is 0.75. For " Scikit-learn Classifier", the level of accuracy is 0.9 and the F1 score is approximately 0.89. The scikit-learn classifier performed better, 10 percent more accurate, on both measures. It correctly classified 9 of the 10 test documents, while my naive bayes classifier correctly classified 8 of the 10 documents.
+"My Naive Bayes Classifier" level of accuracy is seen as 0.8 and for F1 score is 0.75. For " Scikit-learn Classifier", the level of accuracy is 0.9 and the F1 score is approximately 0.89. The scikit-learn classifier performed better, 10 percentage points higher in accuracy”: the scores are 90% and 80%., on both measures. It correctly classified 9 of the 10 test documents, while my naive bayes classifier correctly classified 8 of the 10 documents.
 
 
 b) **Print a confusion matrix for both the Naive Bayes classifier you created and the one off-the-shelf from scikit-learn. Save the plot as conf.jpg (or other image format). For each classifier, what do you notice from the conf.**
